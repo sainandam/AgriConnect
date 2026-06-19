@@ -5,6 +5,7 @@ interface AuthContextType {
   user: User | null;
   login: (email: string, password: string, role: UserRole, username: string) => Promise<boolean>;
   logout: () => void;
+  acceptTerms: () => void;
   isAuthenticated: boolean;
 }
 
@@ -25,7 +26,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Check for stored user session
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      // Fetch latest terms acceptance status from the registry
+      const termsRegistry = JSON.parse(localStorage.getItem('users_terms_accepted') || '{}');
+      const termsAccepted = !!termsRegistry[`${parsedUser.email}:${parsedUser.role}`];
+      setUser({
+        ...parsedUser,
+        terms_accepted: termsAccepted,
+      });
     }
   }, []);
 
@@ -47,11 +55,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       },
     };
 
+    const termsRegistry = JSON.parse(localStorage.getItem('users_terms_accepted') || '{}');
+    const termsAccepted = !!termsRegistry[`${email}:${role}`];
+
     if (demoUsers[email] && password === 'demo123' && demoUsers[email].role === role) {
       // Update demo user with provided username if different
-      const user = { ...demoUsers[email], name: username || demoUsers[email].name };
-      setUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
+      const loggedUser: User = { 
+        ...demoUsers[email], 
+        name: username || demoUsers[email].name,
+        terms_accepted: termsAccepted
+      };
+      setUser(loggedUser);
+      localStorage.setItem('user', JSON.stringify(loggedUser));
       return true;
     }
 
@@ -61,6 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       name: username,
       role,
+      terms_accepted: termsAccepted
     };
     setUser(newUser);
     localStorage.setItem('user', JSON.stringify(newUser));
@@ -72,10 +88,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem('user');
   };
 
+  const acceptTerms = () => {
+    if (user) {
+      const updatedUser = { ...user, terms_accepted: true };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+
+      // Persist in the users_terms_accepted registry
+      const termsRegistry = JSON.parse(localStorage.getItem('users_terms_accepted') || '{}');
+      termsRegistry[`${user.email}:${user.role}`] = true;
+      localStorage.setItem('users_terms_accepted', JSON.stringify(termsRegistry));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, acceptTerms, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 

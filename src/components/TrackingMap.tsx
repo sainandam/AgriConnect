@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, MapPin, Navigation, Clock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useEquipment } from '../context/EquipmentContext';
@@ -178,7 +178,6 @@ const TrackingMap: React.FC<TrackingMapProps> = ({ onClose }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {myBookings.map((booking) => {
                     const trackData = getTrackingData(booking.equipmentId);
-                    const eq = getEquipment(booking.equipmentId);
                     const isSelected = selectedBooking === booking.equipmentId;
 
                     return (

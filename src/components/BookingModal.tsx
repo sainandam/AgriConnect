@@ -15,6 +15,8 @@ const BookingModal: React.FC<BookingModalProps> = ({ equipmentId, onClose }) => 
   const [startDate, setStartDate] = useState(format(addDays(new Date(), 1), 'yyyy-MM-dd'));
   const [endDate, setEndDate] = useState(format(addDays(new Date(), 8), 'yyyy-MM-dd'));
   const [loading, setLoading] = useState(false);
+  const [acres, setAcres] = useState(1);
+  const [hours, setHours] = useState(8);
 
   const equipmentItem = equipment.find((eq) => eq.id === equipmentId);
 
@@ -22,8 +24,19 @@ const BookingModal: React.FC<BookingModalProps> = ({ equipmentId, onClose }) => 
     return null;
   }
 
-  const days = differenceInDays(new Date(endDate), new Date(startDate));
-  const totalPrice = days * equipmentItem.pricePerDay;
+  const rentRate = equipmentItem.rentRate !== undefined ? equipmentItem.rentRate : equipmentItem.pricePerDay;
+  const rentUnit = equipmentItem.rentUnit || 'day';
+
+  const days = Math.max(1, differenceInDays(new Date(endDate), new Date(startDate)));
+  
+  let totalPrice = 0;
+  if (rentUnit === 'day') {
+    totalPrice = days * rentRate;
+  } else if (rentUnit === 'hour') {
+    totalPrice = days * hours * rentRate;
+  } else if (rentUnit === 'acre') {
+    totalPrice = acres * rentRate;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,14 +123,59 @@ const BookingModal: React.FC<BookingModalProps> = ({ equipmentId, onClose }) => 
             </div>
           </div>
 
+          {rentUnit === 'acre' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Acres to cultivate *
+              </label>
+              <input
+                type="number"
+                value={acres}
+                onChange={(e) => setAcres(Math.max(1, parseInt(e.target.value) || 1))}
+                min="1"
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
+          )}
+
+          {rentUnit === 'hour' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Estimated usage hours per day *
+              </label>
+              <input
+                type="number"
+                value={hours}
+                onChange={(e) => setHours(Math.max(1, Math.min(24, parseInt(e.target.value) || 1)))}
+                min="1"
+                max="24"
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+            </div>
+          )}
+
           <div className="bg-gray-50 rounded-lg p-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-600">Rental Period:</span>
+              <span className="text-gray-600">Rental Duration:</span>
               <span className="font-medium">{days} {days === 1 ? 'day' : 'days'}</span>
             </div>
+            {rentUnit === 'hour' && (
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Daily Estimated Hours:</span>
+                <span className="font-medium">{hours} hours/day</span>
+              </div>
+            )}
+            {rentUnit === 'acre' && (
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Total Acres:</span>
+                <span className="font-medium">{acres} {acres === 1 ? 'acre' : 'acres'}</span>
+              </div>
+            )}
             <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-600">Price per day:</span>
-              <span className="font-medium">₹{equipmentItem.pricePerDay}</span>
+              <span className="text-gray-600">Rental Rate:</span>
+              <span className="font-medium">₹{rentRate} per {rentUnit}</span>
             </div>
             <div className="flex justify-between items-center pt-2 border-t">
               <span className="text-lg font-semibold text-gray-900">Total Price:</span>

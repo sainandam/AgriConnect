@@ -4,6 +4,7 @@ import { EquipmentProvider } from './context/EquipmentContext';
 import Login from './pages/Login';
 import FarmerDashboard from './pages/FarmerDashboard';
 import OwnerDashboard from './pages/OwnerDashboard';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode; requiredRole?: 'farmer' | 'owner' }> = ({
   children,
@@ -15,6 +16,11 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; requiredRole?: 'farm
     return <Navigate to="/login" replace />;
   }
 
+  // Redirect to terms page if terms have not been accepted yet
+  if (user && !user.terms_accepted) {
+    return <Navigate to="/terms" replace />;
+  }
+
   if (requiredRole && user?.role !== requiredRole) {
     return <Navigate to={user?.role === 'farmer' ? '/farmer/dashboard' : '/owner/dashboard'} replace />;
   }
@@ -22,10 +28,26 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; requiredRole?: 'farm
   return <>{children}</>;
 };
 
+const TermsRoute: React.FC = () => {
+  const { isAuthenticated, user } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If terms are already accepted, redirect directly to dashboard
+  if (user && user.terms_accepted) {
+    return <Navigate to={user.role === 'farmer' ? '/farmer/dashboard' : '/owner/dashboard'} replace />;
+  }
+
+  return <TermsAndConditions />;
+};
+
 function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/terms" element={<TermsRoute />} />
       <Route
         path="/farmer/dashboard"
         element={
@@ -60,4 +82,5 @@ function App() {
 }
 
 export default App;
+
 

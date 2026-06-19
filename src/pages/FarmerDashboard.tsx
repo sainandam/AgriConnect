@@ -24,7 +24,10 @@ const FarmerDashboard: React.FC = () => {
   };
 
   const availableEquipment = equipment.filter(
-    (eq) => eq.status === 'available' && eq.name.toLowerCase().includes(searchTerm.toLowerCase())
+    (eq) =>
+      eq.status === 'available' &&
+      (eq.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        eq.type.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const myBookings = bookings.filter((booking) => booking.farmerId === user?.id);
@@ -107,6 +110,23 @@ const FarmerDashboard: React.FC = () => {
             <MapPin className="w-5 h-5" />
             Live Equipment Tracking
           </button>
+        </div>
+
+        {/* Andhra Pradesh Equipment Banner */}
+        <div className="mb-6 bg-gradient-to-r from-green-800 to-green-700 rounded-lg shadow-lg overflow-hidden">
+          <div className="px-6 py-5 text-white">
+            <h2 className="text-xl font-bold">Top 10 Farm Equipments for Rent in Andhra Pradesh</h2>
+            <p className="text-green-100 text-sm mt-1">
+              Most used in rural areas for agriculture & allied activities — paddy, maize, groundnut, chilli & cotton
+            </p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              {['Tractor', 'Rotavator', 'Seed Drill', 'Paddy Transplanter', 'Combine Harvester'].map((tag) => (
+                <span key={tag} className="px-2 py-1 bg-white/15 rounded text-xs font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Search */}

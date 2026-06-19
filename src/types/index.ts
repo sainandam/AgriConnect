@@ -5,6 +5,7 @@ export interface User {
   email: string;
   name: string;
   role: UserRole;
+  terms_accepted?: boolean;
 }
 
 export interface Equipment {
@@ -15,6 +16,8 @@ export interface Equipment {
   ownerId: string;
   ownerName: string;
   pricePerDay: number;
+  rentRate?: number;
+  rentUnit?: 'hour' | 'acre' | 'day';
   location: {
     lat: number;
     lng: number;

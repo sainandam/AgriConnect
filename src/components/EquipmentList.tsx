@@ -1,6 +1,6 @@
 import React from 'react';
 import { Equipment } from '../types';
-import { MapPin, Calendar, CheckCircle, XCircle, Wrench, Image as ImageIcon } from 'lucide-react';
+import { MapPin, CheckCircle, XCircle, Wrench, Image as ImageIcon } from 'lucide-react';
 
 interface EquipmentListProps {
   equipment: Equipment[];
@@ -49,7 +49,8 @@ const EquipmentList: React.FC<EquipmentListProps> = ({ equipment, onBook, userRo
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover bg-gray-100"
+                loading="lazy"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
@@ -80,7 +81,9 @@ const EquipmentList: React.FC<EquipmentListProps> = ({ equipment, onBook, userRo
                 <span>{item.location.address}</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <span className="font-semibold">₹{item.pricePerDay}/day</span>
+                <span className="font-semibold">
+                  ₹{item.rentRate !== undefined ? item.rentRate : item.pricePerDay} per {item.rentUnit || 'day'}
+                </span>
               </div>
             </div>
 

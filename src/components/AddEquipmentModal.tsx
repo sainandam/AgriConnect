@@ -18,8 +18,8 @@ const AddEquipmentModal: React.FC<AddEquipmentModalProps> = ({ onClose }) => {
     description: '',
     pricePerDay: '',
     address: '',
-    lat: '40.7128',
-    lng: '-74.0060',
+    lat: '16.5062',
+    lng: '80.6480',
     status: 'available' as 'available' | 'rented' | 'maintenance',
     image: '',
   });
