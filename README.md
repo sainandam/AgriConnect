@@ -1,155 +1,325 @@
-# Farm Rental Equipment App
+# 🌾 AgriConnect
 
-A comprehensive farm equipment rental platform with AI-powered crop equipment advisor, live tracking, and booking management system.
+### Smart Farm Equipment Rental Platform for Farmers and Equipment Owners
 
-## Features
+AgriConnect is a role-based farm equipment rental platform designed to connect farmers with equipment owners. The platform enables farmers to discover, book, and track agricultural machinery while allowing owners to manage equipment listings and rental requests.
 
-### 🔐 Authentication
-- Role-based login system (Farmer and Owner)
-- Secure session management
-- Demo accounts available
+The project focuses on improving accessibility to modern farming equipment in rural Andhra Pradesh and reducing the financial burden of purchasing expensive machinery.
 
-### 👨‍🌾 Farmer Features
+---
+
+## 🔗 Live Demo
+
+https://agri-connect-steel-delta.vercel.app/login
+
+---
+
+## 📂 GitHub Repository
+
+https://github.com/sainandam/AgriConnect
+
+---
+
+## 🎯 Problem Statement
+
+Many farmers require agricultural machinery only during specific farming operations such as land preparation, sowing, spraying, transplanting, harvesting, and threshing. Purchasing these machines is often expensive and impractical for small and medium-scale farmers.
+
+At the same time, many equipment owners have machinery that remains idle for a significant portion of the year.
+
+AgriConnect bridges this gap by providing a digital platform where farmers can rent equipment from nearby owners whenever needed.
+
+---
+
+## 🚜 Available Equipment
+
+The platform currently includes the most commonly rented agricultural equipment used across Andhra Pradesh:
+
+| Equipment | Model |
+|------------|---------|
+| Tractor | Mahindra 575 DI XP Plus |
+| Tractor Trailer | Standard 6 Ton Trailer |
+| Rotavator | Fieldking / Garud (6 Feet) |
+| Cultivator | Heavy Duty Cultivator |
+| Seed Drill | Multi Crop Seed Drill (9 Tyne) |
+| Power Sprayer | Mahindra Boom Sprayer |
+| Power Tiller | VST Shakti 130 DI |
+| Paddy Transplanter | Kubota NSPU-68C |
+| Combine Harvester | 8 ft Mini Combine Harvester |
+| Thresher | Sonalika Multi Crop Thresher |
+
+---
+
+## 👨‍🌾 Farmer Features
+
 - Browse available equipment
-- Search and filter equipment
-- Book equipment with date selection
+- Search equipment instantly
+- View equipment specifications
+- View rental pricing
+- Book equipment online
 - View booking history
-- **AI Crop Equipment Advisor** - Get personalized equipment recommendations based on crop type, season, and farm size
-- **Live Equipment Tracking** - Real-time location tracking of rented equipment
+- AI Crop Equipment Advisor
+- Live Equipment Tracking
+- Role-based dashboard experience
+- Terms & Conditions acceptance flow
 
-### 👔 Owner Features
-- Add and manage equipment listings
-- View all bookings
-- Accept/reject booking requests
+---
+
+## 👨‍💼 Equipment Owner Features
+
+- Add new equipment listings
+- Manage equipment inventory
+- Monitor equipment availability
+- View booking requests
+- Track rental activity
+- Manage equipment status
+- View booking statistics
+- Revenue tracking dashboard
+
+---
+
+## 🔐 Authentication & Security
+
+### Role-Based Authentication
+
+Users can log in as:
+
+- Farmer
+- Equipment Owner
+
+### Protected Routes
+
+Only authenticated users can access dashboards and platform features.
+
+### Terms & Conditions Flow
+
+After first login:
+
+Login
+↓
+Terms & Conditions
+↓
+Accept Terms
+↓
+Dashboard Access
+
+Terms acceptance is stored locally to prevent repeated prompts.
+
+---
+
+## 🤖 AI Crop Equipment Advisor
+
+The AI Advisor recommends suitable equipment based on:
+
+- Crop Type
+- Farm Size
+- Farming Activity
+- Seasonal Requirements
+
+Benefits:
+
+- Better equipment selection
+- Improved productivity
+- Reduced rental confusion
+
+---
+
+## 📍 Live Equipment Tracking
+
+The platform includes equipment tracking functionality that allows users to:
+
+- Monitor equipment locations
 - Track equipment status
-- Monitor revenue and statistics
+- Improve booking transparency
+- Enhance rental management
 
-### 🤖 AI Crop Equipment Advisor
-- Intelligent recommendations based on:
-  - Crop type (Wheat, Corn, Rice, Soybean, etc.)
-  - Season (Spring, Summer, Fall, Winter)
-  - Farm size
-- Provides reasoning for recommendations
-- Suggests optimal equipment combinations
+---
 
-### 📍 Live Equipment Tracking
-- Real-time GPS tracking
-- Equipment status monitoring (idle, in-use, moving)
-- Map visualization
-- Location history
+## 🛠 Tech Stack
 
-### 📅 Booking System
-- Date range selection
-- Automatic price calculation
-- Booking status management
-- Rental workflow (Pending → Confirmed → Active → Completed)
+### Frontend
 
-## Tech Stack
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
 
-- **React 18** with TypeScript
-- **Vite** for fast development and building
-- **React Router** for navigation
-- **Tailwind CSS** for styling
-- **Lucide React** for icons
-- **date-fns** for date manipulation
+### State Management
 
-## Getting Started
+- React Context API
 
-### Prerequisites
-- Node.js 18+ and npm/yarn
+### Routing
 
-### Installation
+- React Router DOM
 
-1. Install dependencies:
+### UI Components
+
+- Lucide React Icons
+
+### Utilities
+
+- date-fns
+
+### Deployment
+
+- GitHub
+- Vercel
+
+---
+
+## 🏗 System Architecture
+
+### Farmer Workflow
+
+```text
+Login
+   ↓
+Accept Terms
+   ↓
+Browse Equipment
+   ↓
+Search Equipment
+   ↓
+View Details
+   ↓
+Book Equipment
+   ↓
+Track Booking
+```
+
+### Owner Workflow
+
+```text
+Login
+   ↓
+Accept Terms
+   ↓
+Owner Dashboard
+   ↓
+Add Equipment
+   ↓
+Manage Equipment
+   ↓
+Receive Bookings
+   ↓
+Track Revenue
+```
+
+---
+
+
+## 🚀 Installation Guide
+
+### Clone Repository
+
+```bash
+git clone https://github.com/sainandam/AgriConnect.git
+```
+
+### Navigate to Project
+
+```bash
+cd AgriConnect
+```
+
+### Install Dependencies
+
 ```bash
 npm install
 ```
 
-2. Start the development server:
+### Start Development Server
+
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:5173`
-
-### Demo Accounts
-
-**Farmer Account:**
-- Email: `farmer@demo.com`
-- Password: `demo123`
-
-**Owner Account:**
-- Email: `owner@demo.com`
-- Password: `demo123`
-
-*Note: You can also use any email/password combination for demo purposes*
-
-## Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-│   ├── AIAdvisor.tsx
-│   ├── AddEquipmentModal.tsx
-│   ├── BookingList.tsx
-│   ├── BookingModal.tsx
-│   ├── EquipmentList.tsx
-│   └── TrackingMap.tsx
-├── context/             # React Context providers
-│   ├── AuthContext.tsx
-│   └── EquipmentContext.tsx
-├── pages/               # Page components
-│   ├── Login.tsx
-│   ├── FarmerDashboard.tsx
-│   └── OwnerDashboard.tsx
-├── types/               # TypeScript type definitions
-│   └── index.ts
-├── App.tsx              # Main app component
-├── main.tsx             # Entry point
-└── index.css            # Global styles
-```
-
-## Features in Detail
-
-### AI Crop Equipment Advisor
-The AI advisor analyzes your farming requirements and provides intelligent equipment recommendations. It considers:
-- Crop-specific needs
-- Seasonal requirements
-- Farm size optimization
-- Equipment compatibility
-
-### Live Tracking
-- Real-time location updates every 5 seconds
-- Visual map representation
-- Equipment status indicators
-- Historical location data
-
-### Rental Process
-1. **Farmer** searches and selects equipment
-2. **Farmer** creates booking request with dates
-3. **Owner** reviews and confirms/rejects booking
-4. **Owner** marks booking as active when equipment is delivered
-5. **Owner** completes rental when equipment is returned
-
-## Building for Production
+### Production Build
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+---
 
-## Future Enhancements
+## 🌱 Target Crops
 
-- Integration with real GPS tracking devices
-- Payment gateway integration
-- Advanced AI recommendations using machine learning
-- Mobile app version
-- Equipment maintenance scheduling
-- Reviews and ratings system
-- Chat/messaging between farmers and owners
+The platform is designed around equipment commonly used for:
 
-## License
+- Paddy
+- Maize
+- Groundnut
+- Cotton
+- Chilli
+- Pulses
+- Wheat
+- Vegetables
 
-MIT
+---
 
+## 💡 Future Enhancements
+
+- Online Payment Gateway Integration
+- GPS-Based Live Tracking
+- Equipment Ratings & Reviews
+- Booking Notifications
+- SMS Alerts
+- Mobile Application
+- Predictive Equipment Recommendation System
+- Equipment Maintenance Tracking
+- Rental Analytics Dashboard
+
+---
+
+## 🎓 Academic Project Information
+
+**Project Title:** AgriConnect – Farm Equipment Rental Platform
+
+**Domain:** Agriculture Technology (AgriTech)
+
+**Type:** Full Stack Web Application
+
+**Target Users:**
+- Farmers
+- Equipment Owners
+
+**Objective:**
+To provide an efficient and affordable farm equipment rental ecosystem for rural agricultural communities.
+
+---
+
+## 👨‍💻 Developed By
+
+### Sai Kiran
+
+
+AgriConnect – Smart Farm Equipment Rental Platform
+
+---
+
+## ⭐ Project Highlights
+
+✅ Role-Based Authentication
+
+✅ Farmer Dashboard
+
+✅ Owner Dashboard
+
+✅ Equipment Rental System
+
+✅ Equipment Search
+
+✅ Equipment Management
+
+✅ AI Crop Equipment Advisor
+
+✅ Live Equipment Tracking
+
+✅ Terms & Conditions Workflow
+
+✅ Responsive User Interface
+
+✅ Vercel Deployment
+
+---
+
+### If you found this project useful, consider giving it a ⭐ on GitHub.
